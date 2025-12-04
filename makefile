@@ -7,16 +7,19 @@ OBJS2 = Scanner.o
 OBJS3 = TokensAndStates.o
 OBJS4 = Parser.o
 OBJS5 = Tree.o
+OBJS6 = STAPI.o
 
 CLSFLDR = ScannerClass
 PRSRCLASS = Parser
 TREECLS = TreeClass
+STAPICLS = STAPI
 
 OBJS = $(OBJS1) \
 	$(CLSFLDR)/$(OBJS2) \
 	TokensAndStates/$(OBJS3) \
 	$(PRSRCLASS)/$(OBJS4) \
-	$(TREECLS)/$(OBJS5)
+	$(TREECLS)/$(OBJS5) \
+	$(STAPICLS)/$(OBJS6)
 
 
 all: $(TARGET)
@@ -28,20 +31,24 @@ $(TARGET): $(OBJS)
 $(OBJS1): P3.cpp $(CLSFLDR)/Scanner.h TokensAndStates/TokensAndStates.h $(PRSRCLASS)/Parser.h
 	$(CC) $(CFLAGS) -c P3.cpp -o $(OBJS1)
 
-$(OBJS2): $(CLSFLDR)/Scanner.cpp $(CLSFLDR)/Scanner.h TokensAndStates/TokensAndStates.h
+$(CLSFLDR)/$(OBJS2): $(CLSFLDR)/Scanner.cpp $(CLSFLDR)/Scanner.h TokensAndStates/TokensAndStates.h
 	$(CC) $(CFLAGS) -c $(CLSFLDR)/Scanner.cpp -o $(CLSFLDR)/$(OBJS2)
 
-$(OBJS3): TokensAndStates/TokensAndStates.cpp TokensAndStates/TokensAndStates.h
+TokensAndStates/$(OBJS3): TokensAndStates/TokensAndStates.cpp TokensAndStates/TokensAndStates.h
 	$(CC) $(CFLAGS) -c TokensAndStates/TokensAndStates.cpp -o TokensAndStates/$(OBJS3)
 
-$(OBJS4): $(PRSRCLASS)/Parser.cpp $(PRSRCLASS)/Parser.h TokensAndStates/TokensAndStates.h $(CLSFLDR)/Scanner.h $(TREECLS)/TreeNodeStruct.h $(TREECLS)/Tree.h
+$(PRSRCLASS)/$(OBJS4): $(PRSRCLASS)/Parser.cpp $(PRSRCLASS)/Parser.h TokensAndStates/TokensAndStates.h $(CLSFLDR)/Scanner.h $(TREECLS)/TreeNodeStruct.h $(TREECLS)/Tree.h
 	$(CC) $(CFLAGS) -c $(PRSRCLASS)/Parser.cpp -o $(PRSRCLASS)/$(OBJS4)
 
-$(OBJS5): $(TREECLS)/Tree.cpp $(TREECLS)/Tree.h $(TREECLS)/TreeNodeStruct.h TokensAndStates/TokensAndStates.h
+$(TREECLS)/$(OBJS5): $(TREECLS)/Tree.cpp $(TREECLS)/Tree.h $(TREECLS)/TreeNodeStruct.h TokensAndStates/TokensAndStates.h $(STAPICLS)/STAPI.h
 	$(CC) $(CFLAGS) -c $(TREECLS)/Tree.cpp -o $(TREECLS)/$(OBJS5)
 
+
+$$(STAPICLS)/(OBJS6): $(STAPICLS)/STAPI.cpp $(STAPICLS)/STAPI.h StructsAndInterfaces/STAPIStruct.h
+	$(CC) $(CFLAGS) -c $(STAPICLS)/STAPI.cpp -o $(STAPICLS)/$(OBJS6)
+
 clean:
-	/bin/rm -f *.o ./ScannerClass/*.o ./TokensAndStates/*.o ./Parser/*.o $(TARGET)
+	/bin/rm -f *.o ./ScannerClass/*.o ./TokensAndStates/*.o ./Parser/*.o ./STAPI/*.o $(TARGET)
 
 cleanTest: 
 	/bin/rm -f *.fs25s1

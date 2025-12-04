@@ -1,5 +1,5 @@
 #include "Tree.h"
-static void handleBlock(TreeNode *nodePtr);
+//static void handleBlock(TreeNode *nodePtr);
 
 
 void Tree::fileInitHelper(FILE **filePtr, const char *extension) {
@@ -39,46 +39,25 @@ void Tree::displayPreOrder(TreeNode *nodePtr, size_t depth) const {
 
 
 /*
-void pushID(char *);
-char *popID(void);
-int findID(char *);
-int getIDStackSize(void);
-void pushVarCount(int);
-int popVarCount(void);
-int getVarCountStackSize(void);
-void incrementTopOfStack(void);
+vector<STAPIStruct> varVec;
+	public:
+		void insert(char *);
+		bool verify(char *);
+		void checkVars(void);
+};
 
  */
 
 
 
-void Tree::processNode(TreeNode *nodePtr, size_t depth) const {
+void Tree::processNode(TreeNode *nodePtr) const {
 	if(!nodePtr) {
 		return;
 	}
 
 	switch(nodePtr->label) {
-		case BLOCK:
-			handleBlock(nodePtr);
-			return;
-		case VARLIST:
-			handleVarList(nodePtr);
-			break;
-		case READ:
-			handleRead(nodePtr);
-			break;
-		case COND:
-			handleCond(nodePtr);
-			break;
-		case LOOP:
-			handleLoop(nodePtr);
-			break;
-		case ASSIGN:
-			handleAssign(nodePtr);
-			break;
-		case R:
-			handleR(nodePtr);
-			break;
+		case VARS:
+			handleVars(nodePtr);
 		default:
 			break;
 	}
@@ -88,7 +67,13 @@ void Tree::processNode(TreeNode *nodePtr, size_t depth) const {
 	}
 }
 
+static handleVars(TreeNode *varNode) {
+	if(varNode->tokenArr[0]) {
+		
+	}
+}
 
+/*
 static void handleBlock(TreeNode *nodePtr) {
 	int varCount = 0;
 	TreeNode *varsNode = nodePtr->nodeArr[0];
@@ -98,7 +83,7 @@ static void handleBlock(TreeNode *nodePtr) {
 	processNode(statsNode); // process statements inside block
 
 	for (int i = 0; i < varCount; i++) {
-		adapter.popID();
+		//adapter.popID();
 	}
 	
 	
@@ -117,7 +102,7 @@ static void handleVars(TreeNode *varNodePtr, int &varCount) {
 	}
 }
 
-
+*/
 
 
 

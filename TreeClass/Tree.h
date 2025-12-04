@@ -2,7 +2,7 @@
 #define TREE_H
 #include "TreeNodeStruct.h"
 #include "../TokensAndStates/TokensAndStates.h"
-#include "../StackAdapter/StackAdapter.h"
+#include "../STAPI/STAPI.h"
 #include <stdio.h>
 #include <vector>
 #include <stdlib.h>
@@ -11,17 +11,15 @@
 class Tree {
 	private:
 		TreeNode *root;
-		StackAdapter adapter;
-
+		STAPI apiObj;
 		char *baseFileName;
 		FILE *inOrderFile = NULL;
 		FILE *preOrderFile = NULL;
 		FILE *postOrderFile = NULL;
-
-
 		void displayPreOrder(TreeNode *, size_t) const;
+		int smallChange = 0;
 		void fileInitHelper(FILE **, const char *);
-		void processNode(TreeNode *, size_t);
+		void processNode(TreeNode *) const;
 		
 	public:
 		Tree(char *fileName) {
@@ -62,7 +60,7 @@ class Tree {
 		}
 
 		void processNode()const {
-			processNode(root, 0);
+			processNode(root);
 		}
 
 		
