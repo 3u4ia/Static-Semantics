@@ -11,7 +11,7 @@ struct STAPIStruct {
 */
 
 void STAPI::insert(char *var) {
-	varVec.push_back({var, 0});
+	varVec.push_back(STAPIStruct{var, 0});
 	return;
 }
 
