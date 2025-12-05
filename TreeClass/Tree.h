@@ -19,7 +19,12 @@ class Tree {
 		void displayPreOrder(TreeNode *, size_t) const;
 		int smallChange = 0;
 		void fileInitHelper(FILE **, const char *);
-		void processNode(TreeNode *) const;
+		void processNode(TreeNode *);
+
+		void handleVarUsage( TreeNode *);
+		void handleVars(TreeNode *);
+		void handleVarList(TreeNode *);
+
 		
 	public:
 		Tree(char *fileName) {
@@ -59,7 +64,7 @@ class Tree {
 			displayPreOrder(root, 0);
 		}
 
-		void processNode()const {
+		void processNode() {
 			processNode(root);
 		}
 

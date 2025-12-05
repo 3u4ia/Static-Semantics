@@ -33,6 +33,9 @@ void Parser::parse() {
 		printf("Success!");
 	}
 	treeObj.displayPreOrder();
+	printf("Before processNode runs\n");
+	treeObj.processNode();
+	printf("After processNode runs\n");
 	return;
 }
 
