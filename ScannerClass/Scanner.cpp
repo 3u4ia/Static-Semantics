@@ -102,7 +102,6 @@ Token Scanner::scanToken() {
 	char lexeme[9] = "";
 	int state = 0;
 	int lexemeIndex = 0;
-	bool isFirstCharScanned = false;
 	bool useLookahead = false;
 	bool lineCountToBeIncremented = false;
 	if(charGroup != -1) {
@@ -154,7 +153,6 @@ Token Scanner::scanToken() {
 	Token t;
 	t.lineNum = lineCount;
 	t.tokenID = EOFTK;
-	printf("Final only option EOFTK\n\n");
 	return t;	
 }
 
@@ -266,10 +264,8 @@ static Token finalCase(int state, char *lexeme, int lineNumber) {
 			return token;
 		case EOFTK:
 			token.tokenID = EOFTK;
-			printf("GOT EOF TK\n\n");
 			return token;
 	}
-	printf("ONLY EOFTK LEFT\n\n");
 	token.tokenID = EOFTK;
 	return token;
 }
@@ -297,7 +293,7 @@ static bool checkKeyword(char *lexeme) {
 static void invalidCase(int state, char currentChar, int lineNum) {
 	switch (state) {
 		case INVALID:
-			printf("Invalid char %c found on line %d", currentChar);
+			printf("Invalid char %c found on line %d", currentChar, lineNum);
 			break;
 		case INVDLETTER:
 			printf("Invalid char %c found on line %d expected letter\n", currentChar, lineNum);

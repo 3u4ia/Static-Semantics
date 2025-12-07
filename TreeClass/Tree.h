@@ -12,10 +12,8 @@ class Tree {
 	private:
 		TreeNode *root;
 		STAPI apiObj;
-		char *baseFileName;
-		FILE *inOrderFile = NULL;
+		const char *baseFileName;
 		FILE *preOrderFile = NULL;
-		FILE *postOrderFile = NULL;
 		void displayPreOrder(TreeNode *, size_t) const;
 		int smallChange = 0;
 		void fileInitHelper(FILE **, const char *);
@@ -48,16 +46,9 @@ class Tree {
 			fileInitHelper(&preOrderFile, ".preorder");
 		}
 		~Tree() {
-			if(inOrderFile) {
-				fclose(inOrderFile);
-			}
 			if(preOrderFile) {
 				fclose(preOrderFile);
 			}
-			if(postOrderFile) {
-				fclose(postOrderFile);
-			}
-
 		}
 
 		void displayPreOrder()const {
@@ -66,6 +57,9 @@ class Tree {
 
 		void processNode() {
 			processNode(root);
+			apiObj.checkVars();
+			apiObj.displayVarCount();
+			
 		}
 
 		

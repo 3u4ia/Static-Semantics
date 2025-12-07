@@ -1,7 +1,4 @@
 #include "Tree.h"
-static void handleVars(TreeNode *, STAPI &);
-static void handleVarList(TreeNode *, STAPI &);
-static void handleVarUsage(TreeNode *, STAPI &);
 
 void Tree::fileInitHelper(FILE **filePtr, const char *extension) {
 	size_t newSize = strlen(baseFileName) + strlen(extension);
@@ -39,23 +36,10 @@ void Tree::displayPreOrder(TreeNode *nodePtr, size_t depth) const {
 }
 
 
-/*
-vector<STAPIStruct> varVec;
-	public:
-		void insert(char *);
-		bool verify(char *);
-		void checkVars(void);
-};
-
- */
-
-
-
 void Tree::processNode(TreeNode *nodePtr) {
 	if(!nodePtr) {
 		return;
 	}
-	printf("current node being proc'd %s\n", nonTerminalNames[nodePtr->label]);
 
 	switch(nodePtr->label) {
 		case VARS:
@@ -90,15 +74,20 @@ void Tree::handleVarUsage(TreeNode *nodePtr) {
 		printf("handleCarUsage: nodePtr is null and it shouldn't be\n");
 		exit(1);
 	}
-	if(nodePtr->tokenArr[0].lineNum == -1) {
-		printf("handleVarUsage: nodePtr's first tk's linenum is -1 andi t shouldn't be\n");
-		exit(1);
-	}
 	if(nodePtr->tokenArr[0].tokenID != IDTK) {
-		printf("handleVarUsage: token isn't IDTK when it should be\n");
-		exit(1);
+		if(nodePtr->label != R) { // Because R's identifier is an option not a requirement.
+			printf("handleVarUsage: token %s isn't IDTK when it should be on line %d\n\tCurrentNode: %s\n", nodePtr->tokenArr[0].lexeme, nodePtr->tokenArr[0].lineNum, nonTerminalNames[nodePtr->label]);
+			exit(1);
+		}
 	}
-	apiObj.verify(nodePtr->tokenArr[0].lexeme);
+
+	if(nodePtr->tokenArr[0].tokenID == IDTK) {
+		if(!apiObj.verify(nodePtr->tokenArr[0].lexeme)) {
+			printf("ERROR: token %s instance %s was not previously defined on line number %d\n", tokenNames[nodePtr->tokenArr[0].tokenID - 1000], nodePtr->tokenArr[0].lexeme, nodePtr->tokenArr[0].lineNum);
+			exit(1);
+
+		}
+	}
 }
 
 
@@ -125,42 +114,6 @@ void Tree::handleVarList(TreeNode *varListNode) {
 	}
 
 }
-
-/*
-static void handleBlock(TreeNode *nodePtr) {
-	int varCount = 0;
-	TreeNode *varsNode = nodePtr->nodeArr[0];
-	TreeNode *statsNode = nodePtr->nodeArr[1];
-
-	handleVars(varsNode, varCount);
-	processNode(statsNode); // process statements inside block
-
-	for (int i = 0; i < varCount; i++) {
-		//adapter.popID();
-	}
-	
-	
-}
-
-static void handleVars(TreeNode *varNodePtr, int &varCount) {
-	
-	if(varNodePtr->tokenArr[0].lineNum == -1) { // if vars is an empty node
-		return;
-	}
-	
-	if(!varNodePtr->nodeArr[0]) { // if 
-		return;
-	} else if (varNodePtr->nodeArr[0].label == VARLIST) {
-		handleVarList(varNodePtr->nodeArr[0]);
-	}
-}
-
-*/
-
-
-
-
-
 
 
 

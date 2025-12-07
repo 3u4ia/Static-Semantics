@@ -30,12 +30,10 @@ void Parser::parse() {
 		exit(1);
 	}
 	else {
-		printf("Success!");
+		printf("Success in parsing!\n");
 	}
 	treeObj.displayPreOrder();
-	printf("Before processNode runs\n");
 	treeObj.processNode();
-	printf("After processNode runs\n");
 	return;
 }
 
@@ -472,20 +470,20 @@ TreeNode* Parser::assign() {
 		errorHandler(tokenNames[KEYWORD - 1000]);
 	}
 
-	if(tk.tokenID = IDTK) {
+	if(tk.tokenID == IDTK) {
 		assignNode->tokenArr[0] = tk;
 		tk = scanner.scanToken();
 	} else {
 			errorHandler(tokenNames[IDTK - 1000]);
 	}
 
-	if(tk.tokenID = ASSIGNOPTK) {
+	if(tk.tokenID == ASSIGNOPTK) {
 		tk = scanner.scanToken();
 		assignNode->nodeArr[0] = exp();
 	} else {
 		errorHandler(tokenNames[ASSIGNOPTK - 1000]);
 	}
-	if(tk.tokenID = DELOPTK) {
+	if(tk.tokenID == DELOPTK) {
 		tk = scanner.scanToken();
 		return assignNode;
 	} else {
@@ -552,19 +550,16 @@ TreeNode* Parser::exp() {
 
 	expNode->nodeArr[0] = m();
 	if(tk.tokenID == DBLESTAR) {
-		//printf("EXP: took M ** <EXP> Opt\n");
 		expNode->tokenArr[0] = tk;
 		tk = scanner.scanToken();
 		expNode->nodeArr[1] = exp();
 		return expNode;
 	} else if (tk.tokenID == DBLESLASH) {
 		expNode->tokenArr[0] = tk;
-		//printf("EXP: took M // <EXP> Opt\n");
 		tk = scanner.scanToken();
 		expNode->nodeArr[1] = exp();
 		return expNode;
 	} else {
-		//printf("EXP: took <M> opt\n");
 		return expNode;
 	}
 }
@@ -582,10 +577,8 @@ TreeNode* Parser::m() {
 
 
 	mNode->nodeArr[0] = n();
-	//printf("M: n just ran\n");
 	if(tk.tokenID == OPTK) {
 		if(strcmp(tk.lexeme, "+") == 0) {
-			//printf("M: N+M opt took\n");
 			mNode->tokenArr[0] = tk;
 			tk = scanner.scanToken();
 			mNode->nodeArr[1] = m();
@@ -594,7 +587,6 @@ TreeNode* Parser::m() {
 			return mNode; // In case M -> N opt
 		}
 	} else {
-		//printf("M: Took the Lone N Opt\n");
 		return mNode;
 	}
 }
@@ -613,7 +605,6 @@ TreeNode* Parser::n() {
 
 	if(tk.tokenID == OPTK) {
 		if(strcmp(tk.lexeme, "-") == 0) {
-			//printf("N: took -N opt\n");
 			nNode->tokenArr[0] = tk;
 			tk = scanner.scanToken();
 			nNode->nodeArr[0] = n();
@@ -622,11 +613,9 @@ TreeNode* Parser::n() {
 	}
 
 	nNode->nodeArr[0] = r();
-	//printf("N: Just ran R\n");
 	
 	if(tk.tokenID == OPTK) {
 		if(strcmp(tk.lexeme, "-") == 0) {
-			//printf("N: took R-N Opt\n");
 			nNode->tokenArr[0] = tk;
 			tk = scanner.scanToken();
 			nNode->nodeArr[1] = n();
@@ -635,7 +624,6 @@ TreeNode* Parser::n() {
 			return nNode; // In case N -> R option
 		}
 	} else {
-		//printf("N: Took Lone R Opt\n");
 		return nNode; // In case N -> R option
 	}
 	
@@ -662,12 +650,10 @@ TreeNode* Parser::r() {
 			errorHandler(tokenNames[RGHTPARENDELIM - 1000]);
 		}
 	} else if(tk.tokenID == IDTK) {
-		//printf("R: took ID opt\n");
 		rNode->tokenArr[0] = tk;
 		tk = scanner.scanToken();
 		return rNode;
 	} else if(tk.tokenID == NUMTK) {
-		//printf("R: took NumOpt\n");
 		rNode->tokenArr[0] = tk;
 		tk = scanner.scanToken();
 		return rNode;

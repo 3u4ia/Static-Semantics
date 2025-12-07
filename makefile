@@ -1,6 +1,6 @@
-CC = g++ -g3
+CC = g++ -g3 -O0
 CFLAGS = -g3 -Wall
-TARGET = parser
+TARGET = statSem
 
 OBJS1 = P3.o
 OBJS2 = Scanner.o
@@ -44,11 +44,11 @@ $(TREECLS)/$(OBJS5): $(TREECLS)/Tree.cpp $(TREECLS)/Tree.h $(TREECLS)/TreeNodeSt
 	$(CC) $(CFLAGS) -c $(TREECLS)/Tree.cpp -o $(TREECLS)/$(OBJS5)
 
 
-$$(STAPICLS)/(OBJS6): $(STAPICLS)/STAPI.cpp $(STAPICLS)/STAPI.h StructsAndInterfaces/STAPIStruct.h
+$(STAPICLS)/$(OBJS6): $(STAPICLS)/STAPI.cpp $(STAPICLS)/STAPI.h StructsAndInterfaces/STAPIStruct.h
 	$(CC) $(CFLAGS) -c $(STAPICLS)/STAPI.cpp -o $(STAPICLS)/$(OBJS6)
 
 clean:
-	/bin/rm -f *.o ./ScannerClass/*.o ./TokensAndStates/*.o ./Parser/*.o ./STAPI/*.o $(TARGET)
+	/bin/rm -f *.o ./ScannerClass/*.o ./TokensAndStates/*.o ./Parser/*.o ./STAPI/*.o ./TreeClass/*.o $(TARGET)
 
 cleanTest: 
 	/bin/rm -f *.fs25s1
